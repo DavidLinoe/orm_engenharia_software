@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Funcionario extends Model
-{
-    use HasFactory;
-
-    protected $fillable = ['nome', 'email', 'departamento_id'];
-
-    public function departamento()
+return new class extends Migration {
+    public function up(): void
     {
-        return $this->belongsTo(Departamento::class);
+        Schema::create('funcionarios', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->string('email')->unique();
+            $table->foreignId('departamento_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
     }
-}
+
+    public function down(): void
+    {
+        Schema::dropIfExists('funcionarios');
+    }
+};

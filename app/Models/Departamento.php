@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Departamento extends Model
-{
-    use HasFactory;
-
-    protected $fillable = ['nome'];
-
-    public function funcionarios()
+return new class extends Migration {
+    public function up(): void
     {
-        return $this->hasMany(Funcionario::class);
+        Schema::create('departamentos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->timestamps();
+        });
     }
-}
+
+    public function down(): void
+    {
+        Schema::dropIfExists('departamentos');
+    }
+};
